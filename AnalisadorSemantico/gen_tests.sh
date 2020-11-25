@@ -5,7 +5,7 @@ DATA=/home/matheus/Documentos/Matheus/UFES/8p/compiladores/trabcm/AnalisadorSema
 IN=$DATA/in
 OUT=$DATA/out3
 
-EXE=./parser
+EXE=./trab3
 
 for infile in `ls $IN/*.cm`; do
     base=$(basename $infile)

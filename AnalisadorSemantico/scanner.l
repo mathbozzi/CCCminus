@@ -8,8 +8,11 @@
 %{
 #include <stdio.h>
 #include "parser.h"
+#include "tables.h"
 
 void yyerror(const char *s);
+
+extern StrTable *st;
 
 #define process_token(type) return type
 %}
@@ -68,10 +71,10 @@ SLC         "//"[^\n]*\n
 
 {number}        { process_token(NUM); }
 {identifier}    { process_token(ID); }
-{string}        { process_token(STRING); }
+{string}        { add_string(st, yytext); process_token(STRING); }
 
                 /* Be sure to keep this as the last rule */
-.               { printf("SCANNING ERROR (%d): Unknown symbol %s\n", yylineno, yytext);
-                  exit(1); }
+.           { printf("LEXICAL ERROR (%d): Unknown symbol %s\n", yylineno, yytext);
+              exit(EXIT_FAILURE); }
 
 %%
